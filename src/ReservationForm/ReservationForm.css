@@ -1,0 +1,8 @@
+input {
+    margin: 1%;
+}
+
+label {
+    color: darkgreen;
+    font-weight: bold;
+}
