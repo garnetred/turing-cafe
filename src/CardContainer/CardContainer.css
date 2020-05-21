@@ -1,11 +1,9 @@
 .card-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 75%;
-    height: 95%;
-    margin: 0 auto;
-    align-items: center;
-    /* opacity: 0.5; */
-    /* background-color: green; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 75%;
+  height: auto;
+  margin: 0 auto;
+  align-items: center;
 }

@@ -1,8 +1,8 @@
 input {
-    margin: 1%;
+  margin: 1%;
 }
 
 label {
-    color: darkgreen;
-    font-weight: bold;
+  color: whitesmoke;
+  font-weight: bolder;
 }

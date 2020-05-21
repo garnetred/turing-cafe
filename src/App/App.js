@@ -17,38 +17,49 @@ class App extends Component {
       .json()
       .then((data) => this.setState({ reservations: [...data] }))
       .catch((err) => this.setState({ error: err }));
-    // fetch('http://localhost:3001/api/v1/reservations')
-    // .then(response => response.json())
-    // .then(data => this.setState({reservations: [...data]}))
-    // .catch(err => this.setState({error: err}))
   };
 
   makeReservation = (reservation) => {
-    this.setState({ reservations: [...this.state.reservations, reservation] });
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reservation),
+    };
+
+    fetch("http://localhost:3001/api/v1/reservations", requestOptions)
+      .then((response) => response.json())
+      .then((result) =>
+        this.setState({ reservations: [...this.state.reservations, result] })
+      )
+      .catch((error) => console.log("error", error));
   };
 
-  cancelReservation = (reservation) => {
-    //what would you pass in here?
-    //figure out which reservation has been cancelled
-    const newReservations = this.state.reservations.filter(
-      (appt) => appt.id !== reservation.id
-    );
-    this.setState({ reservations: [...newReservations] });
+  cancelReservation = (event) => {
+    const { id } = event.target;
+    let requestOptions = {
+      method: "DELETE",
+    };
+    fetch(`http://localhost:3001/api/v1/reservations/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((result) => this.setState({ reservations: [...result] }))
+      .catch((err) => console.error(err));
   };
 
   render() {
     return (
       <div className="App">
         <h1 className="app-title">Turing Cafe Reservations</h1>
-        <div className="resy-form">
-          <ReservationForm makeReservation={this.makeReservation} />
-        </div>
-        <div className="resy-container">
-          {/* will pass reservations to the display container
-          form will need to be rendered somewhere in here
-          will pass data to cards*/}
-          <CardContainer data={this.state.reservations} />
-        </div>
+        <main>
+          <div className="resy-form">
+            <ReservationForm makeReservation={this.makeReservation} />
+          </div>
+          <div className="resy-container">
+            <CardContainer
+              data={this.state.reservations}
+              cancelReservation={this.cancelReservation}
+            />
+          </div>
+        </main>
       </div>
     );
   }
